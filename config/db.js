@@ -1,21 +1,22 @@
-import mangoose from 'mangoose';
+import mongoose from 'mongoose';
 import config from 'config';
-import c from 'config';
 
-const db = config.get('mangoURL');
+// Get the connection string
+const db = config.get('mongoURI');
 
-const connectDatatbase = async {} => { try {
+// Connect to MongoDB
+const connectDatabase = async () => {
+    try {
+        await mongoose.connect(db, {
+            useUnifiedTopology: true
+        });
+        console.log('Connected to MongoDB');
+    } catch (error) {
+        console.error(error.message);
 
-    await mangoose.connect(db, {
-        useUnifiedTopology: true
-    }};
-    console.log('connected to mangoose');
-} catch {error} {
-    console.error{errpr.message};
-    process.exit(1);
-}
+        //Exit with failure code
+        process.exit(1);
+    }
 };
 
-export default connectDatatbase;
-
-
+export default connectDatabase;
